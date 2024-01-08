@@ -17,7 +17,7 @@ whitelist_location = settings.get("whitelist_location")
 
 if not os.path.isfile(whitelist_location):
     print("Could not locate whitelist.json")
-    sys.exit()
+    sys.exit(1)
 data: list = json.load(open(whitelist_location))
 
 
@@ -51,10 +51,10 @@ def data_from_name(username: str) -> dict:
     try:
         if resp.json().get("path") is not None:
             print(f"Error: {resp.json()['errorMessage']}")
-            sys.exit()
+            sys.exit(1)
     except requests.exceptions.JSONDecodeError as err:
         print(f"Error found with response: {resp}\nrequest.exceptions.JSONDecodeError: {err}")
-        sys.exit()
+        sys.exit(1)
 
     return resp.json()
 
@@ -89,7 +89,7 @@ def main():
         udat = data_from_name(args.player)
         if already_whitelisted(udat['id']):
             print("User is already whitelisted!")
-            sys.exit()
+            sys.exit(1)
 
         user_obj = {
             "uuid": str(uuid.UUID(udat["id"])),
@@ -114,7 +114,7 @@ def main():
 
         if not already_whitelisted(udat['id']):
             print("User is not whitelisted")
-            sys.exit()
+            sys.exit(1)
 
         data.pop(get_key(udat['id']))
         json.dump(data, open(whitelist_location, "w"), indent=2)
