@@ -56,10 +56,10 @@ def data_from_name(username: str) -> dict:
 
 
 if len(sys.argv) < 3:
-	print("Invalid arguments! Use 'add' or 'remove' and a player name")
+	print("Invalid arguments! Use 'add', 'remove' or 'info' and then a player name")
 	sys.exit()
 elif len(sys.argv) > 3:
-	print("Too many arguments! Use 'add' or 'remove' and a player name")
+	print("Too many arguments! Use 'add', 'remove' or 'info' and then a player name")
 	sys.exit()
 
 args = sys.argv
@@ -95,4 +95,4 @@ elif args[1] == "remove":
 	json.dump(data, open(whitelist_location, "w"), indent=2)
 	print(f"Removed {udat['name']} from the whitelist")
 else:
-	print("Invalid arguments! Use 'add' or 'remove' and then a player name")
+	print("Invalid arguments! Use 'add', 'remove' or 'info' and then a player name")
