@@ -8,11 +8,13 @@ import requests
 
 api_endpoint = "https://api.mojang.com/users/profiles/minecraft/"
 wait_time = 10
+settings: dict = json.load(open("whitelist_settings.json"))
+whitelist_location = settings.get("whitelist_location")
 
-if not os.path.isfile("whitelist.json"):
+if not os.path.isfile(whitelist_location):
 	print("Could not locate whitelist.json")
 	sys.exit()
-data: list = json.load(open("whitelist.json"))
+data: list = json.load(open(whitelist_location))
 
 
 def get_key(uuid_: str) -> int | None:
@@ -73,7 +75,7 @@ if args[1] == "add":
 		"name": udat["name"]
 	}
 	data.append(user_obj)
-	json.dump(data, open("whitelist.json", "w"), indent=2)
+	json.dump(data, open(whitelist_location, "w"), indent=2)
 	print(f"Added {udat['name']} (uuid) to the whitelist")
 elif args[1] == "info":
 	udat = data_from_name(args[2])
@@ -90,7 +92,7 @@ elif args[1] == "remove":
 		sys.exit()
 
 	data.pop(get_key(udat['id']))
-	json.dump(data, open("whitelist.json", "w"), indent=2)
+	json.dump(data, open(whitelist_location, "w"), indent=2)
 	print(f"Removed {udat['name']} from the whitelist")
 else:
 	print("Invalid arguments! Use 'add' or 'remove' and then a player name")
