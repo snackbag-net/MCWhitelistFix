@@ -7,8 +7,8 @@ import uuid
 import requests
 
 api_endpoint = "https://api.mojang.com/users/profiles/minecraft/"
-wait_time = 10
 settings: dict = json.load(open("whitelist_settings.json"))
+wait_time = settings.get("rate_limit_wait_time")
 whitelist_location = settings.get("whitelist_location")
 
 if not os.path.isfile(whitelist_location):

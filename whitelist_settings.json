@@ -1,3 +1,4 @@
 {
-	"whitelist_location": "whitelist.json"
+	"whitelist_location": "whitelist.json",
+	"rate_limit_wait_time": 10
 }
