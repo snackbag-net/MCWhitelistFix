@@ -46,7 +46,7 @@ def data_from_name(username: str) -> dict:
     if resp.status_code == 429:
         print(f"We are rate-limited! Retrying in {wait_time} seconds")
         time.sleep(wait_time)
-        data_from_name(username)
+        return data_from_name(username) # Recursively
 
     try:
         if resp.json().get("path") is not None:
